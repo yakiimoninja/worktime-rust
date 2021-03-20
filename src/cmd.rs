@@ -1,44 +1,39 @@
 use std::io::{stdin, stdout, Write};
 use crate::sql::{inserttable, viewtable};
+extern crate chrono;
+use chrono::offset::Local;
+use chrono::DateTime;
+use rusqlite::ToSql;
+use std::time::SystemTime;
 
 pub fn state1(){
 
-    //Data for table inserion
-    print!("\nAdd date of work:");
-
-    let mut date: String = String::new();
-    read(&mut date);
-
-    println!("");
-    
-    //Loop for int data type check
     loop{
-        print!("Add hours: ");
-        let mut hours: String = String::new();
-        read(&mut hours);
 
-        println!("");
+        //Navigation
+        println!("\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t4. Back.\n");
 
-        let hours: u32 = match hours.trim().parse() {
+        //Navigation
+        let mut state: String = String::new();
+        read(&mut state);
+        let mut state: u8 = match state.trim().parse() {
             Ok(num) => num,
-            Err(_) => {println!("Invalid input!\n"); continue;},
+            Err(_) => {println!("Invalid input!"); continue;}
         };
-        
-        //Function call for data inserion
-        inserttable(hours, date).unwrap();
 
-        println!("Data submitted successfully!\n\n");
-        
-        break;
+        //More navigation
+        match state {
+            1 => insertprep(),
+            2 => print!(""),
+            3 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap();},
+            4 => {break;}
+            _ => print!(""),
+        }
+
     }
-    
 }
 
 pub fn state2(){
-    println!("This is the 2\n");
-}
-
-pub fn state3(){
     loop{
 
         println!("\n\t1. View all.\n\t2. Back.\n");
@@ -65,4 +60,39 @@ pub fn read(input: &mut String){
     print!("> ");
     stdout().flush().expect("Failed to flush");
     stdin().read_line(input).expect("Failed to read");
+}
+
+//Prep for sql query
+fn insertprep(){
+    //Data for table inserion
+    print!("\nAdd date of work:");
+
+    let mut date: String = String::new();
+    read(&mut date);
+
+    println!("");
+
+    let system_date = SystemTime::now();
+    let datetime: DateTime<Local> = system_date.into();
+    let datetime: String = format!("{}", datetime.format("%d/%m/%Y"));
+    
+    //Loop for int data type check
+    loop{
+        print!("Add hours: ");
+        let mut hours: String = String::new();
+        read(&mut hours);
+        println!("");
+
+        let hours: u32 = match hours.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {println!("Invalid input!\n"); continue;},
+        };
+        
+    //Function call for data inserion
+    inserttable(hours, date, datetime).expect("Insertion error");
+
+    println!("Data submitted successfully!\n\n");
+        
+    break;
+    }
 }

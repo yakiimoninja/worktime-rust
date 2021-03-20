@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 pub mod sql;
-use sql::{inserttable, tablecreation};
+use sql::tablecreation;
 pub mod cmd;
 use cmd::*;
 
@@ -12,7 +12,7 @@ fn main() {
     loop{
         
         //Welcome message
-        println!("\t1. Add a new entry.\n\t2. Edit existing entry.\n\t3. View entries.\n\t4. Exit.\n");
+        println!("\t1. Edit entries.\n\t2. View entries.\n\t0. Exit.\n");
         
         //Initializing SQL database
         tablecreation().unwrap();
@@ -30,9 +30,8 @@ fn main() {
         //Logic for navigation
         match state {
             1 => {state1();},
-            2 => {println!("This is the 2\n")},
-            3 => {state3();},
-            4 => {println!("Exiting application!\n"); break},
+            2 => {state2();},
+            0 => {println!("Exiting application!\n"); break},
             _ => println!("Invalid input!\n"),
         }
     }
