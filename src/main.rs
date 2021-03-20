@@ -32,7 +32,7 @@ fn main() {
             1 => {state1();},
             2 => {println!("This is the 2\n")},
             3 => {state3();},
-            4 => {println!("Exiting application!"); break},
+            4 => {println!("Exiting application!\n"); break},
             _ => println!("Invalid input!\n"),
         }
     }

@@ -62,15 +62,15 @@ pub fn viewtable(_x: u8) -> Result<()>{
 
 
 //Function to insest to table
-pub fn inserttable() -> Result<()> {
+pub fn inserttable(hourss: u32, dateofwork: String) -> Result<()> {
 
     let conn = Connection::open("test.db")?;
     //Values to be inserted
     let me = Workentry {
         id: 0,
-        hours_worked: "3".to_string(),
-        date_of_work: "kapote".to_string(),
-        date_of_edit: "ne re mpor".to_string(),
+        hours_worked: hourss.to_string(),
+        date_of_work: dateofwork.trim().to_string(),
+        date_of_edit: "ne re mpor".trim().to_string(),
     };
     
     //Sql query of inserting values

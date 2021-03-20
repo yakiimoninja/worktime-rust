@@ -2,8 +2,36 @@ use std::io::{stdin, stdout, Write};
 use crate::sql::{inserttable, viewtable};
 
 pub fn state1(){
-    print!("Add date of work:");
-    //let date_of_work
+
+    //Data for table inserion
+    print!("\nAdd date of work:");
+
+    let mut date: String = String::new();
+    read(&mut date);
+
+    println!("");
+    
+    //Loop for int data type check
+    loop{
+        print!("Add hours: ");
+        let mut hours: String = String::new();
+        read(&mut hours);
+
+        println!("");
+
+        let hours: u32 = match hours.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {println!("Invalid input!\n"); continue;},
+        };
+        
+        //Function call for data inserion
+        inserttable(hours, date).unwrap();
+
+        println!("Data submitted successfully!\n\n");
+        
+        break;
+    }
+    
 }
 
 pub fn state2(){
