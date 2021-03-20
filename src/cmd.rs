@@ -3,7 +3,6 @@ use crate::sql::{inserttable, viewtable};
 extern crate chrono;
 use chrono::offset::Local;
 use chrono::DateTime;
-use rusqlite::ToSql;
 use std::time::SystemTime;
 
 pub fn state1(){
@@ -16,7 +15,7 @@ pub fn state1(){
         //Navigation
         let mut state: String = String::new();
         read(&mut state);
-        let mut state: u8 = match state.trim().parse() {
+        let state: u8 = match state.trim().parse() {
             Ok(num) => num,
             Err(_) => {println!("Invalid input!"); continue;}
         };
