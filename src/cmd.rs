@@ -1,5 +1,5 @@
 use std::io::{stdin, stdout, Write};
-use crate::sql::{inserttable, viewtable};
+use crate::sql::{deleteentry, inserttable, viewtable};
 extern crate chrono;
 use chrono::offset::Local;
 use chrono::DateTime;
@@ -10,7 +10,7 @@ pub fn state1(){
     loop{
 
         //Navigation
-        println!("\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t4. Back.\n");
+        println!("\n\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t4. Back.\n");
 
         //Navigation
         let mut state: String = String::new();
@@ -23,8 +23,11 @@ pub fn state1(){
         //More navigation
         match state {
             1 => insertprep(),
-            2 => print!(""),
-            3 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap();},
+            2 => {println!("");
+                viewtable(1).unwrap();
+                print!("\nChoose entry to delete by Id:");
+                del();},
+            3 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap(); println!("");},
             4 => {break;}
             _ => print!(""),
         }
@@ -47,7 +50,7 @@ pub fn state2(){
         };
 
         match state {
-            1 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap();},
+            1 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap(); println!("");},
             2 => {break;}
             _ => {println!("Invalid input!\n")}
         }
@@ -90,8 +93,29 @@ fn insertprep(){
     //Function call for data inserion
     inserttable(hours, date, datetime).expect("Insertion error");
 
-    println!("Data submitted successfully!\n\n");
+    println!("Data submitted successfully!\n");
         
     break;
+    }
+}
+
+fn del(){
+
+    loop {
+
+        let mut nav: String = String::new();
+        read(&mut nav);
+        let nav: u8 = match nav.trim().parse() {
+            Ok(num) => num,
+            Err(_) => {println!("Invalid input!"); continue;}
+        };
+
+        deleteentry(nav).expect("");
+        
+        println!("");
+        viewtable(1).unwrap();
+
+        println!("Entry deleted successfully!\n");
+        break;
     }
 }

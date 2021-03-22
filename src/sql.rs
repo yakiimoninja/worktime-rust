@@ -1,5 +1,5 @@
 #![allow(non_snake_case)]
-use rusqlite::{params, Connection, Result};
+use rusqlite::{Connection, Result, named_params, params};
 
 #[derive(Debug)]
 struct Workentry {
@@ -87,6 +87,16 @@ pub fn inserttable(hourss: u32, dateofwork: String, sys_date: String) -> Result<
 
 }
 
+pub fn deleteentry(x: u8) -> Result<()>{
+    
+    let conn = Connection::open("test.db")?;
+    
+    conn.execute("DELETE FROM workcalendar WHERE id = (?1)", params![x])?;
+    
+    Ok(())
+
+}
+
 
 //Function to reformat contents of table output
 fn string_fmt(mut x: String){
@@ -94,7 +104,8 @@ fn string_fmt(mut x: String){
     x = x.replace("(", "Id: ");
     x = x.replacen(", \"", "    Hours: ", 1);
     x = x.replacen("\", \"", "    Date: ", 1);
-    x = x.replace("\", \"", "    Edited on: ");
+    x = x.replacen("\", \"", "    Edited on: ", 1);
+    x = x.replace("\", \"", "    Submitted on: ");
     x = x.replace("\")", "\n");
     x = x.trim_end().to_string();
     println!("{}", x);

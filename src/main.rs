@@ -6,13 +6,13 @@ use cmd::*;
 
 fn main() {
 
-    println!("\nWelcome to WorkTime!\n");
+    println!("\nWelcome to WorkTime!");
 
     //This is the main application loop
     loop{
         
         //Welcome message
-        println!("\t1. Edit entries.\n\t2. View entries.\n\t0. Exit.\n");
+        println!("\n\t1. Edit entries.\n\t2. View entries.\n\t0. Exit.\n");
         
         //Initializing SQL database
         tablecreation().unwrap();
