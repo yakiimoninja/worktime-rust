@@ -6,7 +6,7 @@ use cmd::*;
 
 fn main() {
 
-    println!("\nWelcome to WorkTime!");
+    println!("\nWelcome to WorkTime!\n");
 
     //Initializing SQL database
     tablecreation().unwrap();

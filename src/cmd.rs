@@ -1,5 +1,5 @@
 use std::io::{stdin, stdout, Write};
-use crate::sql::{deleteentry, inserttable, viewtable};
+use crate::sql::{deleteentry, insertentry, viewtable};
 extern crate chrono;
 use chrono::offset::Local;
 use chrono::DateTime;
@@ -10,7 +10,7 @@ pub fn state1(){
     loop{
 
         //Navigation
-        println!("\n\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t0. Exit.\n");
+        println!("\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t0. Exit.\n");
 
         //Console input to string
         let mut state: String = String::new();
@@ -18,7 +18,7 @@ pub fn state1(){
         //String to U8 and Invalid type error check
         let state: u8 = match state.trim().parse() {
             Ok(num) => num,
-            Err(_) => {println!("Invalid input!\n"); continue;}
+            Err(_) => {println!("\nInvalid input!\n"); continue;}
         };
 
         //More navigation
@@ -70,7 +70,7 @@ fn insertprep(){
         };
         
     //Function call for data inserion
-    inserttable(hours, date, datetime).expect("Insertion error");
+    insertentry(hours, date, datetime).expect("Insertion error");
 
     println!("Data submitted successfully!\n");
         
@@ -94,7 +94,7 @@ fn del(){
         println!("");
         viewtable(1).unwrap();
 
-        println!("Entry deleted successfully!\n");
+        println!("\nEntry deleted successfully!\n");
         break;
     }
 }
