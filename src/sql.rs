@@ -1,5 +1,5 @@
 #![allow(non_snake_case)]
-use rusqlite::{Connection, Result, named_params, params};
+use rusqlite::{Connection, Result, params};
 
 #[derive(Debug)]
 struct Workentry {

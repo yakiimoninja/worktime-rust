@@ -10,14 +10,15 @@ pub fn state1(){
     loop{
 
         //Navigation
-        println!("\n\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t4. Back.\n");
+        println!("\n\t1. Add entry.\n\t2. Delete entry.\n\t3. View entries\n\t0. Exit.\n");
 
-        //Navigation
+        //Console input to string
         let mut state: String = String::new();
         read(&mut state);
+        //String to U8 and Invalid type error check
         let state: u8 = match state.trim().parse() {
             Ok(num) => num,
-            Err(_) => {println!("Invalid input!"); continue;}
+            Err(_) => {println!("Invalid input!\n"); continue;}
         };
 
         //More navigation
@@ -28,32 +29,10 @@ pub fn state1(){
                 print!("\nChoose entry to delete by Id:");
                 del();},
             3 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap(); println!("");},
-            4 => {break;}
+            0 => {break;}
             _ => print!(""),
         }
 
-    }
-}
-
-pub fn state2(){
-    loop{
-
-        println!("\n\t1. View all.\n\t2. Back.\n");
-
-        let mut state: String = String::new();
-        read(&mut state);
-
-        //String to U8 and Invalid type error check
-        let state: u8 = match state.trim().parse(){
-            Ok(num) => num,
-            Err(_) => {println!("Invalid input!\n"); continue;},
-        };
-
-        match state {
-            1 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap(); println!("");},
-            2 => {break;}
-            _ => {println!("Invalid input!\n")}
-        }
     }
 }
 
