@@ -24,10 +24,12 @@ pub fn state1(){
         //More navigation
         match state {
             1 => insertprep(),
-            2 => {println!("");
+            2 => {
+                println!("");
                 viewtable(1).unwrap();
                 print!("\nChoose entry to delete by Id:");
-                del();},
+                del();
+                },
             3 => {println!("\nViewing table contents:\n"); viewtable(1).unwrap(); println!("");},
             0 => {break;}
             _ => print!(""),
